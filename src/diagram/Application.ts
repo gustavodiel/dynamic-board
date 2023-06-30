@@ -82,15 +82,8 @@ export class Application {
 
         setInterval(() => {
             window.localStorage.setItem("state", JSON.stringify(this.activeModel.serialize()))
-            Notification.requestPermission().then(function (permission) {
-                let title = "Dynaboard";
-
-                let body = "Salvo!";
-
-                var notification = new Notification(title, { body });
-
-            });
-        }, 5000)
+            console.log("Saved!")
+        }, 2000)
 
     }
 

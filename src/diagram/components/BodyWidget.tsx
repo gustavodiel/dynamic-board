@@ -60,7 +60,7 @@ export const BodyWidget = ({ app }: BodyWidgetProps) => {
     return (
         <S.Body>
             <S.Header>
-                <div className="title">CompCalculator Diagram</div>
+                <div className="title">Dynamic Board!</div>
             </S.Header>
             <S.Content>
                 <TrayWidget>
