@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { AbstractReactFactory } from '@projectstorm/react-canvas-core';
 import { DiagramEngine } from '@projectstorm/react-diagrams-core';
-import {BaseNode} from "../BaseNode";
+import {BaseNode} from "./BaseNode";
 import {Application} from "../../Application";
 import {BaseNodeWidget} from "./BaseNodeWidget";
 

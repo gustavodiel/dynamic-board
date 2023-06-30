@@ -7,7 +7,7 @@ import { CanvasWidget } from '@projectstorm/react-canvas-core';
 import { DemoCanvasWidget } from '../../helpers/DemoCanvasWidget';
 import styled from '@emotion/styled';
 import {InputNodeModel} from "../input/InputNodeModel";
-import {BaseNode} from "./BaseNode";
+import {BaseNode} from "./base/BaseNode";
 import {AdditionNodeModel} from "./operations/AdditionNodeModel";
 import {MultiplicationNodeModel} from "./operations/MultiplicationNodeModel";
 import {DivisionNodeModel} from "./operations/DivisionNodeModel";
@@ -66,10 +66,10 @@ export const BodyWidget = ({ app }: BodyWidgetProps) => {
                 <TrayWidget>
                     <TrayItemWidget model={{ type: 'in' }} name="Output Node" color="rgb(192,255,0)" />
                     <TrayItemWidget model={{ type: 'out' }} name="Input Node" color="rgb(0,192,255)" />
-                    <TrayItemWidget model={{ type: 'add' }} name="+ Node" color="rgb(0,0,255)" />
-                    <TrayItemWidget model={{ type: 'mult' }} name="* Node" color="rgb(0,40,255)" />
-                    <TrayItemWidget model={{ type: 'div' }} name="/ Node" color="rgb(0,80,255)" />
-                    <TrayItemWidget model={{ type: 'sub' }} name="- Node" color="rgb(0,160,255)" />
+                    <TrayItemWidget model={{ type: 'add' }} name="+ Node" color="green" />
+                    <TrayItemWidget model={{ type: 'mult' }} name="* Node" color="yellow" />
+                    <TrayItemWidget model={{ type: 'div' }} name="/ Node" color="red" />
+                    <TrayItemWidget model={{ type: 'sub' }} name="- Node" color="blue" />
                 </TrayWidget>
                 <S.Layer
                     onDrop={(event) => {
@@ -79,7 +79,7 @@ export const BodyWidget = ({ app }: BodyWidgetProps) => {
                         let node: BaseNode | null = null;
                         switch (data.type) {
                             case 'in':
-                                node = new BaseNode('Node ' + (nodesCount + 1), 'rgb(192,255,0)');
+                                node = new BaseNode('Output ' + (nodesCount + 1), 'rgb(192,255,0)');
                                 node.addInPort('In');
                                 break;
                             case 'out':
@@ -87,23 +87,23 @@ export const BodyWidget = ({ app }: BodyWidgetProps) => {
                                 node.addOutPort('Out');
                                 break;
                             case 'add':
-                                node = new AdditionNodeModel('Addition ' + (nodesCount + 1), 'rgb(0,0,255)');
+                                node = new AdditionNodeModel('Addition ' + (nodesCount + 1), 'green');
                                 node.addOutPort('Result');
                                 node.addInPort('In');
                                 break;
                             case 'mult':
-                                node = new MultiplicationNodeModel('Multiplication ' + (nodesCount + 1), 'rgb(0,40,255)');
+                                node = new MultiplicationNodeModel('Multiplication ' + (nodesCount + 1), 'yellow');
                                 node.addOutPort('Result');
                                 node.addInPort('In');
                                 break;
                             case 'div':
-                                node = new DivisionNodeModel('Division ' + (nodesCount + 1), 'rgb(0,80,255)');
+                                node = new DivisionNodeModel('Division ' + (nodesCount + 1), 'red');
                                 node.addOutPort('Result');
                                 node.addInPort('A');
                                 node.addInPort('B');
                                 break;
                             case 'sub':
-                                node = new SubtractionNodeModel('Subtraction ' + (nodesCount + 1), 'rgb(0,160,255)');
+                                node = new SubtractionNodeModel('Subtraction ' + (nodesCount + 1), 'blue');
                                 node.addOutPort('Result');
                                 node.addInPort('A');
                                 node.addInPort('B');

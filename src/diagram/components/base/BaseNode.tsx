@@ -1,4 +1,4 @@
-import {ValueLinkModel, ValuePortModel} from "./ValueLinkModel";
+import {ValueLinkModel, ValuePortModel} from "../ValueLinkModel";
 import {DefaultNodeModel, DefaultNodeModelOptions, DeserializeEvent} from "@projectstorm/react-diagrams";
 import {PortModelAlignment} from "@projectstorm/react-diagrams-core";
 
@@ -29,18 +29,18 @@ export class BaseNode extends DefaultNodeModel {
     serialize(): any {
         return {
             ...super.serialize(),
-            value: this.value,
+            value: Number(this.value),
         };
     }
 
     deserialize(event: DeserializeEvent<this>) {
         super.deserialize(event);
 
-        this.value = event.data.value;
+        this.value = Number(event.data.value);
     }
 
     setValue(newValue: any) {
-        this.value = newValue
+        this.value = Number(newValue)
     };
 
     getValue() { return this.value }
@@ -50,6 +50,10 @@ export class BaseNode extends DefaultNodeModel {
 
         this.getOutPorts().forEach(port => {
             Object.values(port.getLinks()).forEach(link => {
+                console.log(link.getID())
+                console.log(link.getType())
+                // @ts-ignore
+                console.log((link as object).constructor.name)
                 children.push(link as ValueLinkModel)
             })
         })
@@ -101,7 +105,7 @@ export class BaseNode extends DefaultNodeModel {
 
     updateTree(): void {
         this.getChildren().forEach(children => {
-            children.update(this)
+            children.update && children.update(this)
         })
     };
 

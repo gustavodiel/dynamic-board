@@ -1,18 +1,17 @@
 import createEngine, {
-    Action,
-    ActionEvent,
     DefaultDiagramState, DeleteItemsAction,
-    DiagramModel,
-    InputType
+    DiagramModel
 } from '@projectstorm/react-diagrams';
-import * as _ from 'lodash'
 import {InputNodeFactory} from "./input/InputNodeFactory";
 import {InputNodeModel} from "./input/InputNodeModel";
-import {ValueLinkFactory} from "./components/ValueLinkModel";
-import {BaseNodeFactory} from "./components/operations/BaseNodeFactory";
+import {ValueLinkFactory, ValuePortFactory} from "./components/ValueLinkModel";
+import {BaseNodeFactory} from "./components/base/BaseNodeFactory";
 import {DiagramEngine} from "@projectstorm/react-diagrams-core";
-import React from "react";
-import {BaseNode} from "./components/BaseNode";
+import {BaseNode} from "./components/base/BaseNode";
+import {AdditionNodeFactory} from "./components/operations/AdditionNodeFactory";
+import {MultiplicationNodeFactory} from "./components/operations/MultiplicationNodeFactory";
+import {DivisionNodeFactory} from "./components/operations/DivisionNodeFactory";
+import {SubtractionNodeFactory} from "./components/operations/SubtractionNodeFactory";
 
 export class Application {
     protected activeModel: DiagramModel;
@@ -36,8 +35,15 @@ export class Application {
             state.dragNewLink.config.allowLooseLinks = false;
         }
 
+        this.diagramEngine.getNodeFactories().registerFactory(new AdditionNodeFactory(this));
+        this.diagramEngine.getNodeFactories().registerFactory(new MultiplicationNodeFactory(this));
+        this.diagramEngine.getNodeFactories().registerFactory(new DivisionNodeFactory(this));
+        this.diagramEngine.getNodeFactories().registerFactory(new SubtractionNodeFactory(this));
         this.diagramEngine.getNodeFactories().registerFactory(new InputNodeFactory(this));
         this.diagramEngine.getNodeFactories().registerFactory(new BaseNodeFactory(this));
+
+        this.diagramEngine.getPortFactories().registerFactory(new ValuePortFactory());
+
         this.diagramEngine.getLinkFactories().registerFactory(new ValueLinkFactory());
 
         this.diagramEngine.getActionEventBus().registerAction(new DeleteItemsAction({ keyCodes: [46] }));
@@ -45,8 +51,6 @@ export class Application {
 
         let oldState = window.localStorage.getItem("state")
         if (oldState) {
-            console.log("init!")
-
             this.activeModel.deserializeModel(JSON.parse(oldState), this.diagramEngine);
         }
 

@@ -3,7 +3,7 @@ import * as _ from 'lodash';
 import { DiagramEngine } from '@projectstorm/react-diagrams-core';
 import styled from '@emotion/styled';
 import {DefaultPortLabel, DefaultPortModel} from "@projectstorm/react-diagrams";
-import {BaseNode} from "../BaseNode";
+import {BaseNode} from "./BaseNode";
 import {Application} from "../../Application";
 
 export const Node = styled.div<{ background: string; selected: boolean }>`

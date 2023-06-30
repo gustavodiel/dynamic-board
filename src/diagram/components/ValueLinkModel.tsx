@@ -1,11 +1,13 @@
 import {
     DefaultLinkFactory,
     DefaultLinkModel,
-    DefaultLinkWidget,
+    DefaultLinkWidget, DefaultPortFactory,
     DefaultPortModel, DeserializeEvent, LinkWidget,
     PointModel
 } from "@projectstorm/react-diagrams";
-import {BaseNode} from "./BaseNode";
+import {BaseNode} from "./base/BaseNode";
+import {AbstractModelFactory} from "@projectstorm/react-canvas-core";
+import {DefaultPortModelOptions} from "@projectstorm/react-diagrams-defaults/dist/@types/port/DefaultPortModel";
 
 
 export class ValueLinkModel extends DefaultLinkModel {
@@ -29,11 +31,12 @@ export class ValueLinkModel extends DefaultLinkModel {
     deserialize(event: DeserializeEvent<this>) {
         super.deserialize(event);
 
-        this.value = event.data.value;
+        console.log("Hey!")
+        this.value = Number(event.data.value);
     }
 
     setValue(newValue: any) {
-        this.value = newValue
+        this.value = Number(newValue)
     }
 
     getValue() { return this.value }
@@ -57,9 +60,25 @@ export class ValueLinkModel extends DefaultLinkModel {
 }
 
 export class ValuePortModel extends DefaultPortModel {
+    constructor(options: DefaultPortModelOptions) {
+        options.type = 'value'
+        super(options);
+    }
     // @ts-ignore
     createLinkModel(): ValueLinkModel | null {
         return new ValueLinkModel();
+    }
+}
+
+export class ValuePortFactory extends DefaultPortFactory {
+    constructor() {
+        super()
+        this.type = 'value';
+    }
+
+    // @ts-ignore
+    generateModel(): ValuePortModel {
+        return new ValuePortModel({ name: 'port' })
     }
 }
 

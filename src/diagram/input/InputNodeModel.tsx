@@ -4,7 +4,7 @@ import {
     DefaultPortModel, DeserializeEvent,
     PortModelAlignment
 } from '@projectstorm/react-diagrams';
-import {BaseNode} from "../components/BaseNode";
+import {BaseNode} from "../components/base/BaseNode";
 import {ValueLinkModel} from "../components/ValueLinkModel";
 
 export class InputNodeModel extends BaseNode {

@@ -6,7 +6,6 @@ import './App.css';
 function App() {
   // const [app, setApp] = useState(new Application())
   const app = useMemo(() => new Application(), [])
-console.log("App")
   return <BodyWidget app={app} />;
 }
 
